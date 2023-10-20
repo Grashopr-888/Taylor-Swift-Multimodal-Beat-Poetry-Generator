@@ -9,9 +9,12 @@ import nltk
 from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import brown
 from nltk.corpus import wordnet
+from nltk.corpus import words
 #download the corpus
 #nltk.download('brown')
-nltk.download('wordnet')
+#nltk.download('wordnet')
+brown_words = set(i.lower() for i in brown.words())
+word_set = set(i.lower for i in words.words())
 
 #set language to english for the stemmer
 stemmer = SnowballStemmer('english')
@@ -139,10 +142,16 @@ df_all_lyrics['Lyrics'].map(lambda x:word_set(x))
 
 # check strange words
 for word in lyric_word_set:
-    if wordnet.synsets(word):
-        continue
-    else:
+    if word not in brown_words:
+        
          print(word)
+   
+
+# for word in lyric_word_set:
+#     if wordnet.synsets(word):
+#         continue
+#     else:  
+#          print(word)
      
 
 
