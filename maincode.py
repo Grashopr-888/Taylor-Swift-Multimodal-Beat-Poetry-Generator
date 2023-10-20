@@ -3,6 +3,10 @@ import csv
 import glob
 import pandas as pd
 import re
+import random
+
+# Additional import for Markov Chain
+from collections import defaultdict
 
 # word package
 import nltk
@@ -156,17 +160,53 @@ df_all_lyrics['Lyrics'].map(lambda x:word_set(x))
 
 
 # check strange words
-for word in lyric_word_set:
-    if word not in brown_words:
+# for word in lyric_word_set:
+#     if word not in brown_words:
         
-         print(word)
+#          print(word)
    
 
-# for word in lyric_word_set:
-#     if wordnet.synsets(word):
-#         continue
-#     else:  
-#          print(word)
+#---- 3. MARKOV CHAIN ----
+# Create a dictionary for the Markov chain
+markov_chain = defaultdict(set)
+word_pairs = []
+
+# Tokenize the lyrics
+for lyric in df_all_lyrics['Lyrics']:
+    words = lyric.split()
+    for i in range(len(words) - 1):
+        word = words[i]
+        next_word = words[i + 1]
+        #word_pairs.append((word, next_word))
+
+        markov_chain[word].add(next_word)
+        
+# Function to generate a poem using the Markov chain
+def generate_poem(seed_word, poem_length=100):
+    poem = [seed_word]
+    current_word = seed_word
+
+    for w in range(poem_length):
+        next_words = markov_chain.get(current_word)
+        if next_words:
+            next_words = list(next_words)
+            next_word = random.choice(next_words)
+            poem.append(next_word)
+            current_word = next_word
+        else:
+            break
+
+    return ' '.join(poem)
+
+# Generate a poem with a random seed word
+random_seed_word = random.choice(list(markov_chain.keys()))
+poem = generate_poem(random_seed_word)
+print(poem)
+
+
+
+
+
      
 
 
