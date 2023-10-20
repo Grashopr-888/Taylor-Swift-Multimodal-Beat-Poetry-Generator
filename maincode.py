@@ -14,11 +14,18 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import brown
 from nltk.corpus import wordnet
 from nltk.corpus import words
+from nltk.corpus import cmudict
+
+
 #download the corpus
 #nltk.download('brown')
 #nltk.download('wordnet')
 brown_words = set(i.lower() for i in brown.words())
 word_set = set(i.lower for i in words.words())
+
+#dictionaries
+pronouncing_dict = cmudict.dict()
+english_words = set(words.words())
 
 #set language to english for the stemmer
 stemmer = SnowballStemmer('english')
@@ -105,7 +112,7 @@ def units_chars(s):
 
      
 def replace_contractions(s):
-    # replacing contractions
+    # replacing contractions (and typos)
     contractions_patterns = [
         (r"won\'t", "will not"),
         (r"can\'t", "cannot"),
@@ -118,6 +125,7 @@ def replace_contractions(s):
         (r"(\w+)\'re", "\g<1> are"),
         (r"(\w+)\'d", "\g<1> would"),
         (r"\'till|til", "until"),
+        (r"\'untill", "until"),
         (r"\'cause", "because"),
         (r"gon\'", "gonna"),
         (r"\'tis", "this is"),
@@ -197,6 +205,27 @@ def generate_poem(seed_word, poem_length=100):
             break
 
     return ' '.join(poem)
+
+
+
+def find_alliterative_words(word):
+    phonemes = pronouncing_dict.get(word)
+
+    initial_phoneme = phonemes[0][0]  # get the initial phoneme
+    alliterations = []
+    
+    for w in english_words:
+        try:
+            word_phonemes = pronouncing_dict.get(w.lower())
+        except TypeError:
+            continue
+        
+        if word_phonemes and word_phonemes[0][0] == initial_phoneme and w != word:
+            alliterations.append(w)
+
+    return alliterations
+
+
 
 # Generate a poem with a random seed word
 random_seed_word = random.choice(list(markov_chain.keys()))
