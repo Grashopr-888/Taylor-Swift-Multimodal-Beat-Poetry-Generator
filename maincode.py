@@ -86,11 +86,12 @@ def units_chars(s):
         s = s.replace("?", " ")
         s = s.replace("&", " ")
         s = s.replace(",", " ")
-        s = s.replace("'", " ")
         s = s.replace('"', " ")
         s = s.replace('—', " ")
         s = s.replace(';', " ")
         s = s.replace(':', " ")
+        s = s.replace('…', " ")
+        s = s.replace('–', " ")
         return s
 
      
@@ -104,9 +105,11 @@ def replace_contractions(s):
         (r"(\w+)\'ll", "\g<1> will"),
         (r"(\w+)n\'t", "\g<1> not"),
         (r"(\w+)\'ve", "\g<1> have"),
-        (r"(he|she|it|that|there|who)\'s", "\g<1> is"), # distinguishing between contractions and possessives
+        (r"(he|she|it|that|there|who|joke|trouble|all)\'s", "\g<1> is"), # distinguishing between some contractions and possessives
         (r"(\w+)\'re", "\g<1> are"),
-        (r"(\w+)\'d", "\g<1> would")
+        (r"(\w+)\'d", "\g<1> would"),
+        (r"\'till", "until"),
+        (r"\'cause", "because")
     ]
     
     for pattern, replacement in contractions_patterns:
