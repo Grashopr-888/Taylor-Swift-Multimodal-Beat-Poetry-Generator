@@ -236,6 +236,7 @@ def generate_poem(seed_word, poem_length=100):
     poem = [seed_word]
     current_word = seed_word
     start_max, max_s = 100, 100
+    fw = 0 #first word in the sentence
     sentence_len = 0
 
     for w in range(poem_length):
@@ -255,7 +256,7 @@ def generate_poem(seed_word, poem_length=100):
 
         if next_word != "\n":
             current_word = next_word
-            sentence_len = countSyllables(' '.join(poem[w:]))
+            sentence_len = countSyllables(' '.join(poem[fw:]))
         else:
             #set maximum sentence length
             if max_s == start_max:
@@ -267,6 +268,7 @@ def generate_poem(seed_word, poem_length=100):
         
         # check if new sentence shouls be started
         if sentence_len > max_s:
+            fw = w
             poem.append("\n")
             sentence_len = 0
 
