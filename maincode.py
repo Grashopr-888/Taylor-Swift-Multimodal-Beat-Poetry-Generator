@@ -181,9 +181,12 @@ markov_chain = defaultdict(set) # word pairs
 # Make word pairs of words in the lyrics
 for lyric in df_all_lyrics['Lyrics']:
     words = lyric.split()
-    for i in range(len(words) - 1):
-        word = words[i]
-        next_word = words[i + 1]
+    for i in range(len(words)):
+        if i != len(words)-1:
+            word = words[i]
+            next_word = words[i + 1]
+        else:
+            next_word = "\n"
         markov_chain[word].add(next_word)
 
 # Finds alliterations for in the poem
@@ -223,7 +226,10 @@ def generate_poem(seed_word, poem_length=100):
             next_word = random.choice(next_words)
 
         poem.append(next_word)
-        current_word = next_word
+        if next_word != "\n":
+            current_word = next_word
+        else:
+            current_word = random.choice(list(markov_chain.keys()))
 
     return ' '.join(poem)
 
