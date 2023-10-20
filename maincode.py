@@ -132,6 +132,7 @@ df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:units_chars(x))
 #change all continuous -in' verbs to -ing
 df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:continuous_verbs(x))
 
+#add all distinct words to set
 df_all_lyrics['Lyrics'].map(lambda x:word_set(x))
 
 
