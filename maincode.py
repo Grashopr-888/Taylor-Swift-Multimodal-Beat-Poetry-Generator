@@ -199,14 +199,15 @@ def generate_poem(seed_word, poem_length=100):
         if next_words:
             next_words = list(next_words)
             next_word = random.choice(next_words)
-            poem.append(next_word)
-            current_word = next_word
+          
         else:
-            break
+            next_words = find_alliterative_words(current_word)
+            next_word = random.choice(next_words)
+            
+        poem.append(next_word)
+        current_word = next_word
 
     return ' '.join(poem)
-
-
 
 def find_alliterative_words(word):
     phonemes = pronouncing_dict.get(word)
