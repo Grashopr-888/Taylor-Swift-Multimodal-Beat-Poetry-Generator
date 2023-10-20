@@ -8,8 +8,10 @@ import re
 import nltk
 from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import brown
-#download the brown corpus
-nltk.download('brown')
+from nltk.corpus import wordnet
+#download the corpus
+#nltk.download('brown')
+nltk.download('wordnet')
 
 #set language to english for the stemmer
 stemmer = SnowballStemmer('english')
@@ -57,7 +59,6 @@ for txt_file in vault_txt_files:
 #print(lyric_list)
 
 df_all_lyrics = pd.DataFrame(lyric_list, columns=['Lyrics'])
-print(df_all_lyrics)
 
 # ------ 2. PREPROCESSING ------
 
@@ -134,6 +135,15 @@ df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:continuous_verbs(
 
 #add all distinct words to set
 df_all_lyrics['Lyrics'].map(lambda x:word_set(x))
+
+
+# check strange words
+for word in lyric_word_set:
+    if wordnet.synsets(word):
+        continue
+    else:
+         print(word)
+     
 
 
 
