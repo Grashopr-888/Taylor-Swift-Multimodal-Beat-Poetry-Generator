@@ -92,6 +92,9 @@ def units_chars(s):
         s = s.replace(':', " ")
         s = s.replace('…', " ")
         s = s.replace('–', " ")
+        # make sure every ‘ and ’ gets replaced by '
+        s = s.replace('’', "'")
+        s = s.replace('‘', "'")
         return s
 
      
