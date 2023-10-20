@@ -200,10 +200,10 @@ def countSyllables(s):
             for p in phonemes:
                 if p[-1].isdigit():
                     num += 1
-
-            return num
         else:
             num += 2
+    
+    return num
 
 # Finds alliterations for in the poem
 # Inputs word
@@ -235,7 +235,7 @@ def find_alliterative_words(word):
 def generate_poem(seed_word, poem_length=100):
     poem = [seed_word]
     current_word = seed_word
-    max_s = 100
+    start_max, max_s = 100, 100
     sentence_len = 0
 
     for w in range(poem_length):
@@ -255,11 +255,12 @@ def generate_poem(seed_word, poem_length=100):
 
         if next_word != "\n":
             current_word = next_word
-            sentence_len = countSyllables(' '.join(poem))
+            sentence_len = countSyllables(' '.join(poem[w:]))
         else:
             #set maximum sentence length
-            if max_s == 0:
+            if max_s == start_max:
                 max_s = countSyllables(' '.join(poem[:-1]))
+                print(max_s)
 
             current_word = random.choice(list(markov_chain.keys()))
             sentence_len = 0
