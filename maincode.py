@@ -114,7 +114,8 @@ def replace_contractions(s):
         (r"(\w+)\'re", "\g<1> are"),
         (r"(\w+)\'d", "\g<1> would"),
         (r"\'till", "until"),
-        (r"\'cause", "because")
+        (r"\'cause", "because"),
+        (r"\'tis", "it is")
     ]
     
     for pattern, replacement in contractions_patterns:
