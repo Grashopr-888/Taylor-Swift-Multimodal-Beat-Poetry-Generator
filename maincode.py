@@ -28,6 +28,7 @@ vault_txt_files = glob.glob(vault_path + "\*.txt")
 # lists
 all_dataframes = []
 lyric_list = []
+lyric_word_set = set()
 
 # open each file and add it to the dataframes list
 for file in data_files:
@@ -72,13 +73,13 @@ def units_chars(s):
 		s = s.replace("\\"," ") # deletes single \ from string
 		s = s.replace("//"," ")
 		s = s.replace("-"," ")
-		s = s.replace("#"," ")
+		s = s.replace("\""," ")
 		s = s.replace("."," ")
 		s = s.replace("("," ")
 		s = s.replace(")"," ")
 		s = s.replace("%"," ")
 		s = s.replace("!"," ")
-		s = s.replace("$"," ")
+		s = s.replace("?"," ")
 		s = s.replace("&"," ")
 		s = s.replace(","," ")
         # s = s.replace("'"," ")
@@ -106,6 +107,18 @@ def replace_contractions(s):
     
     return s
 
+#replacing -in' with -ing    
+def continuous_verbs(s):
+     for word in s.split():
+          if ("n'" in word):
+                s = re.sub("n'", "ng", s)         
+     return s
+
+#creating a set of all words
+def word_set(s):
+    for word in s.split():
+        lyric_word_set.add(word)
+
 # replace the contractions within the lyrics 
 df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].apply(replace_contractions)
 
@@ -116,6 +129,12 @@ df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:str_stemmer(x))
 #delete special characters
 df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:units_chars(x))
 
-print(df_all_lyrics)
+#change all continuous -in' verbs to -ing
+df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:continuous_verbs(x))
+
+df_all_lyrics['Lyrics'].map(lambda x:word_set(x))
+
+
+
 
 
