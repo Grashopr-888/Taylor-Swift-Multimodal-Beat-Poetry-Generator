@@ -110,12 +110,14 @@ def replace_contractions(s):
         (r"(\w+)\'ll", "\g<1> will"),
         (r"(\w+)n\'t", "\g<1> not"),
         (r"(\w+)\'ve", "\g<1> have"),
-        (r"(he|she|it|that|there|who|joke|trouble|all)\'s", "\g<1> is"), # distinguishing between some contractions and possessives
+        (r"(he|she|it|that|there|who|joke|trouble|all|karma|castle|thing)\'s", "\g<1> is"), # distinguishing between some contractions and possessives
         (r"(\w+)\'re", "\g<1> are"),
         (r"(\w+)\'d", "\g<1> would"),
-        (r"\'till", "until"),
+        (r"\'till|til", "until"),
         (r"\'cause", "because"),
-        (r"\'tis", "it is")
+        (r"\'gon", "gonna"),
+        (r"\'tis", "this is"),
+        (r"\'cross", "across")
     ]
     
     for pattern, replacement in contractions_patterns:
