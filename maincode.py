@@ -117,7 +117,9 @@ def replace_contractions(s):
         (r"\'cause", "because"),
         (r"gon\'", "gonna"),
         (r"\'tis", "this is"),
-        (r"\'cross", "across")
+        (r"\'cross", "across"),
+        (r"\'(\w+)\'", "\g<1>"),
+        (r"\'(\w+)", "\g<1>")
     ]
     
     for pattern, replacement in contractions_patterns:
