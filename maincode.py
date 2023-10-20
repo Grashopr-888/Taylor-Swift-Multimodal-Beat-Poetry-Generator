@@ -195,7 +195,12 @@ for lyric in df_all_lyrics['Lyrics']:
 def find_alliterative_words(word):
     phonemes = pronouncing_dict.get(word)
 
-    initial_phoneme = phonemes[0][0]  # get the initial phoneme
+    try:
+        initial_phoneme = phonemes[0][0]  # get the initial phoneme
+    except TypeError:
+        print(word)
+        return random.choice(list(markov_chain.keys()))
+    
     alliterations = []
 
     for w in lyric_word_set:
