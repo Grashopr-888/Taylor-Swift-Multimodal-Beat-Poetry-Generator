@@ -115,7 +115,7 @@ def replace_contractions(s):
         (r"(\w+)\'d", "\g<1> would"),
         (r"\'till|til", "until"),
         (r"\'cause", "because"),
-        (r"\'gon", "gonna"),
+        (r"\gon'", "gonna"),
         (r"\'tis", "this is"),
         (r"\'cross", "across")
     ]
