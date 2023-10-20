@@ -92,9 +92,11 @@ def units_chars(s):
         s = s.replace(':', " ")
         s = s.replace('…', " ")
         s = s.replace('–', " ")
+        s = s.replace('”', " ")
         # make sure every ‘ and ’ gets replaced by '
         s = s.replace('’', "'")
         s = s.replace('‘', "'")
+       
         return s
 
      
@@ -123,8 +125,8 @@ def replace_contractions(s):
 #replacing -in' with -ing    
 def continuous_verbs(s):
      for word in s.split():
-          if ("n'" in word):
-                s = re.sub("n'", "ng", s)         
+          if ("in'" in word):
+                s = re.sub("in'", "ing", s)         
      return s
 
 #creating a set of all words
