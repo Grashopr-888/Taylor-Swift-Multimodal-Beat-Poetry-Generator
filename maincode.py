@@ -176,18 +176,36 @@ df_all_lyrics['Lyrics'].map(lambda x:word_set(x))
 
 #---- 3. MARKOV CHAIN ----
 # Create a dictionary for the Markov chain
-markov_chain = defaultdict(set)
-word_pairs = []
+markov_chain = defaultdict(set) # word pairs
 
-# Tokenize the lyrics
+# Make word pairs of words in the lyrics
 for lyric in df_all_lyrics['Lyrics']:
     words = lyric.split()
     for i in range(len(words) - 1):
         word = words[i]
         next_word = words[i + 1]
-        #word_pairs.append((word, next_word))
-
         markov_chain[word].add(next_word)
+
+# Finds alliterations for in the poem
+# Inputs word
+# Outputs list of alliterations to word
+def find_alliterative_words(word):
+    phonemes = pronouncing_dict.get(word)
+
+    initial_phoneme = phonemes[0][0]  # get the initial phoneme
+    alliterations = []
+
+    for w in lyric_word_set:
+        try:
+            word_phonemes = pronouncing_dict.get(w)
+        except TypeError:
+            continue
+        
+        # if word phoneme exists and is the same as initial phoneme add it to alliteration list
+        if word_phonemes and word_phonemes[0][0] == initial_phoneme:
+            alliterations.append(w)
+
+    return alliterations
         
 # Function to generate a poem using the Markov chain
 def generate_poem(seed_word, poem_length=100):
@@ -203,28 +221,11 @@ def generate_poem(seed_word, poem_length=100):
         else:
             next_words = find_alliterative_words(current_word)
             next_word = random.choice(next_words)
-            
+
         poem.append(next_word)
         current_word = next_word
 
     return ' '.join(poem)
-
-def find_alliterative_words(word):
-    phonemes = pronouncing_dict.get(word)
-
-    initial_phoneme = phonemes[0][0]  # get the initial phoneme
-    alliterations = []
-    
-    for w in english_words:
-        try:
-            word_phonemes = pronouncing_dict.get(w.lower())
-        except TypeError:
-            continue
-        
-        if word_phonemes and word_phonemes[0][0] == initial_phoneme and w != word:
-            alliterations.append(w)
-
-    return alliterations
 
 
 
