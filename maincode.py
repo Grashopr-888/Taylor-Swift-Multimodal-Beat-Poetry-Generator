@@ -61,7 +61,8 @@ print(df_all_lyrics)
 
 #return the base of words
 def str_stemmer(s):
-	return " ".join([stemmer.stem(word) for word in s.lower().split()])
+
+    return s.lower()
 
 def units_chars(s):
 	#replacing special characters with whitespaces
@@ -78,12 +79,12 @@ def units_chars(s):
 		s = s.replace("!"," ")
 		s = s.replace("$"," ")
 		s = s.replace("&"," ")
-		s = s.replace("+"," ")
+		s = s.replace(","," ")
 		#s = s.replace("'"," ")
 		return s
      
 #apply stemmer to dataframe for columns: search_term, product_title, and product_description
-#df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:str_stemmer(x))
+df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:str_stemmer(x))
 
 #delete special characters
 df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:units_chars(x))
