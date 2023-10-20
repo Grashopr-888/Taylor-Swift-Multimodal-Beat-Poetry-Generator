@@ -68,26 +68,29 @@ def str_stemmer(s):
     return s.lower()
 
 def units_chars(s):
-	# replacing special characters with whitespaces
-	if isinstance(s, str):
-		s = s.replace("/"," ")
-		s = s.replace("\\"," ") # deletes single \ from string
-		s = s.replace("//"," ")
-		s = s.replace("-"," ")
-		s = s.replace("\""," ")
-		s = s.replace("."," ")
-		s = s.replace("("," ")
-		s = s.replace(")"," ")
-		s = s.replace("%"," ")
-		s = s.replace("!"," ")
-		s = s.replace("?"," ")
-		s = s.replace("&"," ")
-		s = s.replace(","," ")
-        # s = s.replace("'"," ")
-		# s = s.replace('"',"")
-		return s
+    # replacing special characters with whitespaces
+    if isinstance(s, str):
+        s = s.replace("/", " ")
+        s = s.replace("\\", " ")  # deletes single \ from string
+        s = s.replace("//", " ")
+        s = s.replace("-", " ")
+        s = s.replace("\"", " ")
+        s = s.replace(".", " ")
+        s = s.replace("(", " ")
+        s = s.replace(")", " ")
+        s = s.replace("%", " ")
+        s = s.replace("!", " ")
+        s = s.replace("?", " ")
+        s = s.replace("&", " ")
+        s = s.replace(",", " ")
+        s = s.replace("'", " ")
+        s = s.replace('"', " ")
+        s = s.replace('—', " ")
+        s = s.replace(';', " ")
+        s = s.replace(':', " ")
+        return s
 
-
+     
 def replace_contractions(s):
     # replacing contractions
     contractions_patterns = [
@@ -120,15 +123,14 @@ def word_set(s):
     for word in s.split():
         lyric_word_set.add(word)
 
-# replace the contractions within the lyrics 
-df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].apply(replace_contractions)
-
-     
 #apply stemmer to dataframe for columns: search_term, product_title, and product_description
 df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:str_stemmer(x))
 
 #delete special characters
 df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:units_chars(x))
+
+# replace the contractions within the lyrics 
+df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:replace_contractions(x))
 
 #change all continuous -in' verbs to -ing
 df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:continuous_verbs(x))
@@ -143,7 +145,6 @@ for word in lyric_word_set:
         continue
     else:
          print(word)
-     
 
 
 
