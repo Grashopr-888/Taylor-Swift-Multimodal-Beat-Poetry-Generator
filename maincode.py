@@ -189,6 +189,22 @@ for lyric in df_all_lyrics['Lyrics']:
             next_word = "\n"
         markov_chain[word].add(next_word)
 
+def countSyllables(s):
+    num = 0
+    
+    for word in s:
+        if word in pronouncing_dict:
+            # Get the first pronunciation and count the number of syllables
+            phonemes = pronouncing_dict[word][0]
+            
+            for p in phonemes:
+                if p[-1].isdigit():
+                    num += 1
+
+            return num
+        else:
+            num += 2
+
 # Finds alliterations for in the poem
 # Inputs word
 # Outputs list of alliterations to word
@@ -198,7 +214,7 @@ def find_alliterative_words(word):
     try:
         initial_phoneme = phonemes[0][0]  # get the initial phoneme
     except TypeError:
-        print(word)
+        # print(word)
         return random.choice(list(markov_chain.keys()))
     
     alliterations = []
@@ -219,22 +235,39 @@ def find_alliterative_words(word):
 def generate_poem(seed_word, poem_length=100):
     poem = [seed_word]
     current_word = seed_word
+    max_s = 100
+    sentence_len = 0
 
     for w in range(poem_length):
         next_words = markov_chain.get(current_word)
+
+        # current word has matching word pairs
         if next_words:
             next_words = list(next_words)
             next_word = random.choice(next_words)
-          
+
+        # otherwise find alliteration  
         else:
             next_words = find_alliterative_words(current_word)
             next_word = random.choice(next_words)
 
         poem.append(next_word)
+
         if next_word != "\n":
             current_word = next_word
+            sentence_len = countSyllables(' '.join(poem))
         else:
+            #set maximum sentence length
+            if max_s == 0:
+                max_s = countSyllables(' '.join(poem[:-1]))
+
             current_word = random.choice(list(markov_chain.keys()))
+            sentence_len = 0
+        
+        # check if new sentence shouls be started
+        if sentence_len > max_s:
+            poem.append("\n")
+            sentence_len = 0
 
     return ' '.join(poem)
 
