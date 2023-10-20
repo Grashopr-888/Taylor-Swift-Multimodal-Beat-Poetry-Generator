@@ -2,8 +2,18 @@ import numpy
 import csv
 import glob
 import pandas as pd
-import nltk
 
+# word package
+import nltk
+from nltk.stem.snowball import SnowballStemmer
+from nltk.corpus import brown
+#download the brown corpus
+nltk.download('brown')
+
+#set language to english for the stemmer
+stemmer = SnowballStemmer('english')
+
+# ------ 1. RETRIEVE DATA ------
 data_path = "Data"
 midnights_path = "Midnights"
 vault_path = "TheVault"
@@ -43,5 +53,41 @@ for txt_file in vault_txt_files:
 
 
 #print(lyric_list)
+
+df_all_lyrics = pd.DataFrame(lyric_list, columns=['Lyrics'])
+print(df_all_lyrics)
+
+# ------ 2. PREPROCESSING ------
+
+#return the base of words
+def str_stemmer(s):
+	return " ".join([stemmer.stem(word) for word in s.lower().split()])
+
+def units_chars(s):
+	#replacing special characters with whitespaces
+	if isinstance(s, str):
+		s = s.replace("/"," ")
+		s = s.replace("\\"," ") #deletes single \ from string
+		s = s.replace("//"," ")
+		s = s.replace("-"," ")
+		s = s.replace("#"," ")
+		s = s.replace("."," ")
+		s = s.replace("("," ")
+		s = s.replace(")"," ")
+		s = s.replace("%"," ")
+		s = s.replace("!"," ")
+		s = s.replace("$"," ")
+		s = s.replace("&"," ")
+		s = s.replace("+"," ")
+		#s = s.replace("'"," ")
+		return s
+     
+#apply stemmer to dataframe for columns: search_term, product_title, and product_description
+#df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:str_stemmer(x))
+
+#delete special characters
+df_all_lyrics['Lyrics'] = df_all_lyrics['Lyrics'].map(lambda x:units_chars(x))
+
+print(df_all_lyrics)
 
 
