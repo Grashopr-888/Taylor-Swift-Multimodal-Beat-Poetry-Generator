@@ -235,10 +235,9 @@ def find_alliterative_words(word):
 
 #---- 5. GENERATE POEM ----
 # Function to generate a poem using the Markov chain
-def generate_poem(seed_word, poem_length=10):
+def generate_poem(seed_word, poem_length=10, max_s = 80):
     poem = [seed_word]
     current_word = seed_word
-    max_s = 100
     fw = 0 #first word in the sentence
     sentence_len = 0
     line_nr = 0 #line in poem
@@ -277,7 +276,7 @@ def generate_poem(seed_word, poem_length=10):
             current_word = random.choice(list(markov_chain.keys()))
             line_nr += 1
             fw = len(poem)
-
+    print(line_nr)
     return ' '.join(poem).replace("\n ", "\n") # make sure new lines don't start with a white space
 
 # Remove white lines
