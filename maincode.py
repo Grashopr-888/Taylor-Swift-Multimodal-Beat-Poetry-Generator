@@ -285,7 +285,7 @@ def remove_lines(text):
 
 # Generate a poem with a random seed word
 random_seed_word = random.choice(list(markov_chain.keys()))
-poem = generate_poem(random_seed_word)
+poem = generate_poem(random_seed_word, poem_length=5, max_s=60)
 cleaned_poem = remove_lines(poem)
 print(cleaned_poem)
 
