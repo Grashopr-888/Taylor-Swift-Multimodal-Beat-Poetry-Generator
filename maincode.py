@@ -258,7 +258,10 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
         
         # check if it is valid to start a new line
         if next_word == "\n" and not start_new:
-            continue
+            if next_words and len(next_words) > 1:
+                continue
+            else:
+                next_words = find_alliterative_words(current_word)
 
         poem.append(next_word)
         start_new = True
@@ -281,7 +284,7 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
             if line_nr == 0: #if it's the first sentence, set maximum syllables
                 max_s = countSyllables(' '.join(poem[fw:]))
 
-            current_word = random.choice(list(markov_chain.keys()))
+            #current_word = random.choice(list(markov_chain.keys()))
             line_nr += 1
             fw = len(poem)
 
