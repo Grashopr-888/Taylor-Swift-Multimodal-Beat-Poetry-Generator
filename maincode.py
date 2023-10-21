@@ -252,7 +252,7 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
             next_word = random.choice(next_words)
 
         # otherwise find alliteration  
-        else:
+        if next_word == current_word or not next_words:
             next_words = find_alliterative_words(current_word)
             next_word = random.choice(next_words)
         
@@ -285,6 +285,7 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
                 max_s = countSyllables(' '.join(poem[fw:]))
 
             #current_word = random.choice(list(markov_chain.keys()))
+            
             line_nr += 1
             fw = len(poem)
 
