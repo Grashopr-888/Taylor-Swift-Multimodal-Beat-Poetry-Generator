@@ -205,6 +205,8 @@ def countSyllables(s):
     
     return num
 
+
+#---- 4. ALLITERATIONS ----
 # Finds alliterations for in the poem
 # Inputs word
 # Outputs list of alliterations to word
@@ -230,7 +232,8 @@ def find_alliterative_words(word):
             alliterations.append(w)
 
     return alliterations
-        
+
+#---- 5. GENERATE POEM ----
 # Function to generate a poem using the Markov chain
 def generate_poem(seed_word, poem_length=100):
     poem = [seed_word]
@@ -276,16 +279,16 @@ def generate_poem(seed_word, poem_length=100):
             fw = len(poem)
             poem.append("\n")
 
-    return ' '.join(poem).replace("\n ", "\n")
+    return ' '.join(poem).replace("\n ", "\n") # make sure new lines don't start with a white space
 
-
-def remove_empty_lines(text):
+# Remove white lines
+def remove_lines(text):
     return '\n'.join(line for line in text.split('\n') if line.strip())
 
 # Generate a poem with a random seed word
 random_seed_word = random.choice(list(markov_chain.keys()))
 poem = generate_poem(random_seed_word)
-cleaned_poem = remove_empty_lines(poem)
+cleaned_poem = remove_lines(poem)
 print(cleaned_poem)
 
 
