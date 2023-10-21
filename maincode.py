@@ -276,14 +276,17 @@ def generate_poem(seed_word, poem_length=100):
             fw = len(poem)
             poem.append("\n")
 
-    return ' '.join(poem)
+    return ' '.join(poem).replace("\n ", "\n")
 
 
+def remove_empty_lines(text):
+    return '\n'.join(line for line in text.split('\n') if line.strip())
 
 # Generate a poem with a random seed word
 random_seed_word = random.choice(list(markov_chain.keys()))
 poem = generate_poem(random_seed_word)
-print(poem)
+cleaned_poem = remove_empty_lines(poem)
+print(cleaned_poem)
 
 
 
