@@ -284,8 +284,7 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
             current_word = random.choice(list(markov_chain.keys()))
             line_nr += 1
             fw = len(poem)
-            
-    print(line_nr)
+
     return ' '.join(poem).replace("\n ", "\n") # make sure new lines don't start with a white space
 
 # Remove white lines
