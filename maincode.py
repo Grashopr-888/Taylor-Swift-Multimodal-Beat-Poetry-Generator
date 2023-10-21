@@ -235,12 +235,16 @@ def find_alliterative_words(word):
 def generate_poem(seed_word, poem_length=100):
     poem = [seed_word]
     current_word = seed_word
-    start_max, max_s = 100, 100
+    max_s = 100
     fw = 0 #first word in the sentence
     sentence_len = 0
+    line_nr = 0 #line in poem
 
     for w in range(poem_length):
         next_words = markov_chain.get(current_word)
+        sentence_len = countSyllables(' '.join(poem[fw:])) #current sentence length
+        print(poem[fw:])
+        print(sentence_len)
 
         # current word has matching word pairs
         if next_words:
@@ -256,21 +260,21 @@ def generate_poem(seed_word, poem_length=100):
 
         if next_word != "\n":
             current_word = next_word
-            sentence_len = countSyllables(' '.join(poem[fw:]))
+            
         else:
             #set maximum sentence length
-            if max_s == start_max:
-                max_s = countSyllables(' '.join(poem[:-1]))
-                print(max_s)
+            if line_nr == 0: #if it's the first sentence, set maximum syllables
+                max_s = countSyllables(' '.join(poem[fw:]))
+                print("MAX LEN = ", max_s)
 
             current_word = random.choice(list(markov_chain.keys()))
-            sentence_len = 0
+            line_nr += 1
+            fw = len(poem)
         
-        # check if new sentence shouls be started
+        # check if new sentence should be started
         if sentence_len > max_s:
-            fw = w
+            fw = len(poem)
             poem.append("\n")
-            sentence_len = 0
 
     return ' '.join(poem)
 
