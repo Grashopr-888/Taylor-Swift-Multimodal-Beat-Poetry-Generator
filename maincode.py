@@ -238,14 +238,13 @@ def find_alliterative_words(word):
 def generate_poem(seed_word, poem_length=10, max_s = 80):
     poem = [seed_word]
     current_word = seed_word
+    start_new = True
     fw = 0 #first word in the sentence
     sentence_len = 0
     line_nr = 0 #line in poem
 
     while line_nr < poem_length:
         next_words = markov_chain.get(current_word)
-        # print(poem[fw:])
-        # print(sentence_len)
 
         # current word has matching word pairs
         if next_words:
@@ -256,19 +255,28 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
         else:
             next_words = find_alliterative_words(current_word)
             next_word = random.choice(next_words)
+        
+        # check if it is valid to start a new line
+        if next_word == "\n" and not start_new:
+            continue
 
         poem.append(next_word)
+        start_new = True
 
         if next_word != "\n":
             current_word = next_word
             sentence_len = countSyllables(' '.join(poem[fw:])) #current sentence length
             # check if new sentence should be started
             if sentence_len > max_s:
+                start_new = False # next word cannot be "\n"
+
                 fw = len(poem)
                 poem.append("\n")
                 line_nr += 1
             
         else:
+            start_new = False # next word cannot be "\n"
+          
             #set maximum sentence length
             if line_nr == 0: #if it's the first sentence, set maximum syllables
                 max_s = countSyllables(' '.join(poem[fw:]))
@@ -276,6 +284,7 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
             current_word = random.choice(list(markov_chain.keys()))
             line_nr += 1
             fw = len(poem)
+            
     print(line_nr)
     return ' '.join(poem).replace("\n ", "\n") # make sure new lines don't start with a white space
 
@@ -286,8 +295,9 @@ def remove_lines(text):
 # Generate a poem with a random seed word
 random_seed_word = random.choice(list(markov_chain.keys()))
 poem = generate_poem(random_seed_word, poem_length=5, max_s=60)
-cleaned_poem = remove_lines(poem)
-print(cleaned_poem)
+print(poem)
+
+#cleaned_poem = remove_lines(poem)
 
 
 
