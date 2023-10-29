@@ -12,14 +12,15 @@ from collections import defaultdict
 import nltk
 from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import brown
-from nltk.corpus import wordnet
 from nltk.corpus import words
 from nltk.corpus import cmudict
 
 
 #Download the corpus
 #nltk.download('brown')
-#nltk.download('wordnet')
+#nltk.download('words')
+#nltk.download('cmudict')
+
 brown_words = set(i.lower() for i in brown.words())
 word_set = set(i.lower for i in words.words())
 
