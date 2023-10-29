@@ -17,14 +17,16 @@ pip install numpy pandas nltk
 1. Ensure that you have Python 3.8 or later installed on your system.
 2. Ensure that pip is installed on your system.
 3. Download the code or clone the repository to your local machine.
-4. Navigate to the directory containing the code in your terminal or command prompt.
-5. Run the pip command mentioned above to install the required packages.
-6. Download the necessary NLTK data by running the following Python commands:
+4. Ensure that you have the folders containing the text data ("Data", "Midnights", "TheVault").
+5. Navigate to the directory containing the code in your terminal or command prompt.
+6. Run the pip command mentioned above to install the required packages.
+7. Download the necessary NLTK data by running the following Python commands:
 ```
 nltk.download('brown')
 nltk.download('words')
 nltk.download('cmudict')
 ```
+
 
 # Running the Generator
 To run the program, follow these steps:
@@ -47,4 +49,3 @@ midnights_path = "Midnights"
 vault_path = "TheVault"
 ```
 - Ensure that the text and CSV files are encoded in UTF-8 to avoid encoding issues.
-
