@@ -1,5 +1,5 @@
 # Overview
-This program is a Taylor Swift lyric-based poem generator that combines data files from multiple sources, processes them, and then uses a Markov Chain to generate a poem. The program utilizes various libraries including NumPy, pandas, and NLTK to handle data manipulation, text processing, and natural language processing.
+This program is a Taylor Swift lyric-based poem generator that combines data files from multiple sources, processes them, and then uses a Markov Chain to generate a poem. The program utilizes various libraries including pandas, and NLTK to handle data manipulation, text processing, and natural language processing.
 
 # System Requirements
 
