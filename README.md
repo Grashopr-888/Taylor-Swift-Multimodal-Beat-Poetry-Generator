@@ -49,3 +49,7 @@ midnights_path = "Midnights"
 vault_path = "TheVault"
 ```
 - Ensure that the text and CSV files are encoded in UTF-8 to avoid encoding issues.
+
+## Data Source
+- The CSV files in the Data directory were retreived from the "Taylor Swift Song Lyrics (All Albums)" Kaggle dataset by Jan Llenzl Dagohoy. This dataset can be found on: https://www.kaggle.com/datasets/thespacefreak/taylor-swift-song-lyrics-all-albums
+- All lyrics are lyrics from Taylor Swift.
