@@ -1,5 +1,3 @@
-import numpy
-import csv
 import glob
 import pandas as pd
 import re
@@ -276,10 +274,6 @@ def generate_poem(seed_word, poem_length=10, max_s = 80):
             fw = len(poem)
 
     return ' '.join(poem).replace("\n ", "\n") #make sure new lines don't start with a white space
-
-#Remove white lines
-def remove_lines(text):
-    return '\n'.join(line for line in text.split('\n') if line.strip())
 
 #Generate a poem with a random seed word
 random_seed_word = random.choice(list(markov_chain.keys()))
