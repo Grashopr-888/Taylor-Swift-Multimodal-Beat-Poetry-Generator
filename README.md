@@ -38,7 +38,8 @@ python maincode.py
 ```
 4. The program will output a generated poem.
 
-# Data and Directories
+# Data Files
+## Directories
 - The program expects CSV files containing lyrics in a "Data" directory.
 - The program expects text files for the Midnights album in the "Midnights" directory.
 - The program expects text files for the vault tracks in "TheVault" directory.
